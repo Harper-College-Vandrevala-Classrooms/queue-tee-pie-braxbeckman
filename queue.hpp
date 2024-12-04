@@ -7,7 +7,7 @@
 class Queue
 {
 private:
-  Cutie *arr[5];
+  Cutie *arr[11];
   Cutie **bottom;
   Cutie **top;
   Cutie **arrEnd;
@@ -19,75 +19,59 @@ public:
     bottom = arr;
     top = arr;
     arrStart = arr;
-    arrEnd = (arr + 4);
-    for (int i = 0; i < 5; i++)
-    {
-      *(arr + i) = nullptr;
-    }
+    arrEnd = (arr + 10);
+    // *(arr + 10) = nullptr;
   }
 
   int size()
   {
-    int currentSize{};
-    for (int i = 0; i < 5; i++)
-    {
-      if (*(arr + i) == nullptr)
-      {
-        continue;
-      }
-      else
-      {
-        currentSize++;
-      }
-    }
-    return currentSize;
+    return top - bottom;
   }
 
   void enqueue(Cutie *item)
   {
-    if (size() == 5)
+    if (top == arrEnd)
     {
-      std::cout << "Queue is full!" << std::endl;
+      std::cout << "No more space in the queue!" << std::endl;
     }
+    // else if (top == arrEnd - 1)
+    // {
+    //   *top = item;
+    // }
     else
     {
       // std::cout << item->description() << std::endl;
       *top = item;
-      if (top == arrEnd)
-      {
-        top = arrStart;
-      }
-      else
-      {
       top++;
-      }
     }
   }
 
   Cutie *dequeue()
   {
     Cutie *tmp = nullptr;
+    // std::cout << "tmp set to nullptr" << std::endl;
 
     if (size() == 0)
     {
       std::cout << "Queue is empty!" << std::endl; 
+      return nullptr;
     }
     else
     {
-      *tmp = **bottom;
-      *bottom = nullptr;
+      tmp = *bottom;
+      // std::cout << "*tmp = **bottom" << std::endl;
       if (bottom == arrEnd)
       {
-        std::cout << "if 1" << std::endl;
-        bottom = arrStart;
+        std::cout << "Queue is empty!" << std::endl;
+        return nullptr;
       }
       else
       {
-        std::cout << "if 2" << std::endl;
+        // std::cout << "operation succesful" << std::endl;
         bottom++;
       }
     }
-
+  // std::cout << "returning tmp" << std::endl;
     return tmp;
   }
 };
